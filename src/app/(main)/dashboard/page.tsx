@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { adminApiGet } from "@/lib/api";
 import type {
+  AnalyticsSummary,
   CareSubmissionRow,
   CaseStudyRow,
   ConsultationRow,
@@ -13,6 +14,8 @@ import type {
   ContactSubmissionRow,
   PartnershipSubmissionRow,
 } from "@/types";
+
+import { AnalyticsOverview } from "./_components/analytics-overview";
 
 export const metadata: Metadata = {
   title: "Home | SmartIQLiving Admin",
@@ -26,6 +29,15 @@ async function safeGet<T>(path: string): Promise<T[]> {
   }
 }
 
+/** Single-object variant of `safeGet`, for endpoints that return one summary. */
+async function safeGetOne<T>(path: string): Promise<T | null> {
+  try {
+    return await adminApiGet<T>(path);
+  } catch {
+    return null;
+  }
+}
+
 type ActivityItem = {
   id: string;
   type: string;
@@ -36,14 +48,16 @@ type ActivityItem = {
 };
 
 export default async function DashboardPage() {
-  const [consultations, contactSubmissions, partnerships, careRequests, contacts, caseStudies] = await Promise.all([
-    safeGet<ConsultationRow>("consultations"),
-    safeGet<ContactSubmissionRow>("contact-submissions"),
-    safeGet<PartnershipSubmissionRow>("partnership-submissions"),
-    safeGet<CareSubmissionRow>("care-submissions"),
-    safeGet<ContactRow>("contacts"),
-    safeGet<CaseStudyRow>("case-studies"),
-  ]);
+  const [consultations, contactSubmissions, partnerships, careRequests, contacts, caseStudies, analytics] =
+    await Promise.all([
+      safeGet<ConsultationRow>("consultations"),
+      safeGet<ContactSubmissionRow>("contact-submissions"),
+      safeGet<PartnershipSubmissionRow>("partnership-submissions"),
+      safeGet<CareSubmissionRow>("care-submissions"),
+      safeGet<ContactRow>("contacts"),
+      safeGet<CaseStudyRow>("case-studies"),
+      safeGetOne<AnalyticsSummary>("analytics/summary"),
+    ]);
 
   const stats = [
     {
@@ -123,6 +137,17 @@ export default async function DashboardPage() {
           An overview of enquiries, leads and content across SmartIQLiving.
         </p>
       </div>
+
+      {analytics ? (
+        <AnalyticsOverview summary={analytics} />
+      ) : (
+        <Card>
+          <CardHeader>
+            <CardTitle>Today&rsquo;s traffic</CardTitle>
+            <CardDescription>Traffic data is unavailable right now.</CardDescription>
+          </CardHeader>
+        </Card>
+      )}
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {stats.map((stat) => (

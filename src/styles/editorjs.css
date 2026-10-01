@@ -1,0 +1,166 @@
+/**
+ * Editor.js ships its own DOM and class names (`.ce-block__content`,
+ * `.ce-toolbar__plus`, `.cdx-*` …), none of which are Tailwind. Rather than
+ * hardcoding colours — which AGENTS.md forbids in new screens and which would
+ * break the theme presets and dark mode — everything here is bridged onto the
+ * app's existing CSS variables.
+ *
+ * Scoped under `.blog-editor` so nothing leaks into other screens.
+ */
+
+.blog-editor {
+  color: var(--foreground);
+}
+
+/* The redactor reserves a large empty tail by default; the page already has
+   its own padding, so trim it back. */
+.blog-editor .codex-editor__redactor {
+  padding-bottom: 8rem !important;
+}
+
+.blog-editor .ce-block__content,
+.blog-editor .ce-toolbar__content {
+  max-width: 46rem;
+  margin-inline: auto;
+}
+
+.blog-editor .ce-block--selected .ce-block__content {
+  background: var(--muted);
+  border-radius: var(--radius-sm);
+}
+
+/* Block hover / focus affordances */
+.blog-editor .ce-toolbar__plus,
+.blog-editor .ce-toolbar__settings-btn {
+  color: var(--muted-foreground);
+  border-radius: var(--radius-sm);
+}
+
+.blog-editor .ce-toolbar__plus:hover,
+.blog-editor .ce-toolbar__settings-btn:hover {
+  background: var(--muted);
+  color: var(--foreground);
+}
+
+/* Text */
+.blog-editor .ce-paragraph {
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+.blog-editor .ce-header {
+  color: var(--foreground);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.blog-editor .cdx-block {
+  padding-block: 0.35rem;
+}
+
+/* Popovers, the inline toolbar and the block picker */
+.blog-editor .ce-popover,
+.blog-editor .ce-inline-toolbar,
+.blog-editor .ce-settings,
+.blog-editor .cdx-search-field {
+  background: var(--popover);
+  color: var(--popover-foreground);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.blog-editor .ce-popover-item:hover:not(.ce-popover-item--disabled),
+.blog-editor .ce-inline-tool:hover {
+  background: var(--accent);
+  color: var(--accent-foreground);
+}
+
+.blog-editor .ce-popover-item__icon,
+.blog-editor .ce-inline-tool {
+  color: var(--muted-foreground);
+}
+
+.blog-editor .ce-popover-item--active {
+  background: var(--accent);
+  color: var(--accent-foreground);
+}
+
+.blog-editor .cdx-search-field,
+.blog-editor .cdx-search-field input {
+  color: var(--popover-foreground);
+}
+
+/* Quotes, warnings, code, tables and captions */
+.blog-editor .cdx-quote {
+  border-left: 3px solid var(--primary);
+  background: var(--muted);
+  border-radius: var(--radius-sm);
+}
+
+.blog-editor .cdx-quote__text,
+.blog-editor .cdx-quote__caption {
+  color: var(--foreground);
+}
+
+.blog-editor .cdx-warning {
+  border-radius: var(--radius-sm);
+}
+
+.blog-editor .cdx-warning::before {
+  filter: grayscale(1);
+}
+
+.blog-editor .ce-code__textarea,
+.blog-editor .cdx-input {
+  background: var(--muted);
+  color: var(--foreground);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  box-shadow: none;
+  font-size: 0.875rem;
+}
+
+.blog-editor .cdx-input:focus,
+.blog-editor .ce-code__textarea:focus {
+  border-color: var(--ring);
+}
+
+.blog-editor .tc-wrap {
+  --color-background: var(--background);
+  --color-border: var(--border);
+  --color-text-secondary: var(--muted-foreground);
+  --color-background-active: var(--accent);
+}
+
+.blog-editor .cdx-checklist__item-checkbox {
+  border-color: var(--border);
+  border-radius: var(--radius-sm);
+}
+
+.blog-editor .cdx-checklist__item--checked .cdx-checklist__item-checkbox {
+  background: var(--primary);
+  border-color: var(--primary);
+}
+
+/* Images and embeds */
+.blog-editor .image-tool__image,
+.blog-editor .embed-tool__caption {
+  border-radius: var(--radius-sm);
+}
+
+.blog-editor .image-tool--filled .image-tool__image {
+  background: var(--muted);
+}
+
+.blog-editor .cdx-loader::before,
+.blog-editor .image-tool__image-preloader::after {
+  border-color: var(--primary) transparent var(--primary) transparent;
+}
+
+/* Placeholders */
+.blog-editor .ce-paragraph[data-placeholder-active]::before,
+.blog-editor .cdx-block[data-placeholder]::before,
+.blog-editor .cdx-input[data-placeholder]::before {
+  color: var(--muted-foreground);
+}

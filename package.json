@@ -14,13 +14,28 @@
     "generate:presets": "ts-node -P tsconfig.scripts.json src/scripts/generate-theme-presets.ts"
   },
   "lint-staged": {
-    "*.{js,ts,jsx,tsx}": ["biome check --write --no-errors-on-unmatched"]
+    "*.{js,ts,jsx,tsx}": [
+      "biome check --write --no-errors-on-unmatched"
+    ]
   },
   "dependencies": {
     "@base-ui/react": "^1.8.0",
     "@dnd-kit/abstract": "^0.5.0",
     "@dnd-kit/helpers": "^0.5.0",
     "@dnd-kit/react": "^0.5.0",
+    "@editorjs/checklist": "^1.6.0",
+    "@editorjs/code": "^2.9.4",
+    "@editorjs/delimiter": "^1.4.2",
+    "@editorjs/editorjs": "^2.31.7",
+    "@editorjs/embed": "^2.8.0",
+    "@editorjs/header": "^2.8.9",
+    "@editorjs/image": "^2.10.3",
+    "@editorjs/inline-code": "^1.5.2",
+    "@editorjs/marker": "^1.4.0",
+    "@editorjs/nested-list": "^1.4.3",
+    "@editorjs/quote": "^2.7.6",
+    "@editorjs/table": "^2.4.6",
+    "@editorjs/warning": "^1.4.1",
     "@fullcalendar/react": "^7.1.0",
     "@hookform/resolvers": "^5.9.1",
     "@shadcn/react": "^0.3.1",
