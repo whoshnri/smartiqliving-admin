@@ -1,6 +1,7 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "smartiqliving-admin",
+  "account_id": "b3858905030f68863c67d373c5048d9f",
   "main": ".open-next/worker.js",
   "compatibility_date": "2026-11-11",
   "compatibility_flags": ["nodejs_compat"],
