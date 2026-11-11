@@ -15,7 +15,10 @@ export type FontKey = keyof typeof fontRegistry;
 
 export const fontKeys = Object.keys(fontRegistry) as FontKey[];
 
-export const fontVars = [GeistSans, GeistMono].map((font) => font.variable).join(" ");
+// Apply Geist Sans as a real class, not only as a CSS variable. Its class
+// takes precedence over theme utility styles and guarantees the dashboard is
+// rendered in the bundled font.
+export const fontVars = [GeistSans.className, GeistMono.variable].join(" ");
 
 export const fontOptions = fontKeys.map((key) => ({
   key,
