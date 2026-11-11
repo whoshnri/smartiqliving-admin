@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import { redirect } from "next/navigation";
 
 import { AppSidebar } from "@/components/app-sidebar";
+import { NavigationProgress } from "@/components/navigation-progress";
 import { Separator } from "@/components/ui/separator";
 import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { getVerifiedSession } from "@/lib/api";
@@ -16,6 +17,7 @@ export default async function DashboardLayout({ children }: Readonly<{ children:
 
   return (
     <SidebarProvider>
+      <NavigationProgress />
       <AppSidebar session={session} />
       <SidebarInset className="min-w-0 overflow-x-clip">
         <header className="flex h-14 shrink-0 items-center gap-2 border-b px-4">

@@ -22,6 +22,7 @@ import {
 } from "@/components/ui/sidebar";
 import { adminNavGroups } from "@/config/nav";
 import type { AdminSession } from "@/lib/auth";
+import { startNavigationProgress } from "@/lib/navigation-progress";
 
 export function AppSidebar({ session }: { session: AdminSession }) {
   const pathname = usePathname();
@@ -39,6 +40,7 @@ export function AppSidebar({ session }: { session: AdminSession }) {
 
   async function logout() {
     await fetch("/api/auth/logout", { method: "POST" });
+    startNavigationProgress();
     router.replace("/login");
     router.refresh();
   }

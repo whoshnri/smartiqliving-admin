@@ -18,6 +18,7 @@ import { Label } from "@/components/ui/label";
 import { NativeSelect, NativeSelectOption } from "@/components/ui/native-select";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
+import { startNavigationProgress } from "@/lib/navigation-progress";
 import { fromDateTimeLocal, slugify, toDateTimeLocal } from "@/lib/slug";
 import type { BlogAuthorRow, BlogCategoryRow, BlogPostDetail, EditorJsDocument } from "@/types";
 
@@ -128,8 +129,7 @@ export function BlogEditor({ post, categories, authors }: BlogEditorProps) {
     setValue("slug", slugify(title));
   }, [title, slugTouched, setValue]);
 
-  const scheduled =
-    status === "PUBLISHED" && publishedAt.length > 0 && new Date(publishedAt).getTime() > Date.now();
+  const scheduled = status === "PUBLISHED" && publishedAt.length > 0 && new Date(publishedAt).getTime() > Date.now();
 
   async function handleCoverUpload(file: File) {
     setUploadingCover(true);
@@ -188,6 +188,7 @@ export function BlogEditor({ post, categories, authors }: BlogEditorProps) {
       if (post) {
         router.refresh();
       } else if (body?.data?.id) {
+        startNavigationProgress();
         router.replace(`/dashboard/blog/${body.data.id}`);
       }
     } catch (error) {
@@ -242,10 +243,7 @@ export function BlogEditor({ post, categories, authors }: BlogEditorProps) {
           </div>
 
           <div className="rounded-xl border bg-background p-4">
-            <EditorCanvas
-              initialData={post?.content ?? { blocks: [] }}
-              editorRef={editorRef}
-            />
+            <EditorCanvas initialData={post?.content ?? { blocks: [] }} editorRef={editorRef} />
           </div>
         </div>
 
